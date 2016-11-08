@@ -1,6 +1,8 @@
 # c-fun (working title)
 A immutuable-first language compiling to C++
 
+You can read a first look over the syntax [here](nain.md).
+
 ## FAQ (not really, but to prevent those question)
 
 ### Why a new language?
