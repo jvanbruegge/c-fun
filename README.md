@@ -1,7 +1,7 @@
 # c-fun (working title)
 A immutuable-first language compiling to C++
 
-You can read a first look over the syntax [here](nain.md).
+You can read a first look over the syntax [here](main.md).
 
 ## FAQ (not really, but to prevent those question)
 
