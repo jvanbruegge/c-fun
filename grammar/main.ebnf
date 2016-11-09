@@ -1,0 +1,25 @@
+Program = (TopLevelStatement)* Main (TopLevelStatement)*;
+
+TopLevelStatement = Declaration | Definition;
+
+Declaration = (CONST | LET | PURE) IDENTIFIER ':' TypeSignature ';';
+
+Definition = Declaration '=' Expression ';';
+
+Expression = Lamda | Term;
+
+Lamda = IDENTIFIER '=>' (Expression | Block);
+
+Block = '{' (Declaration | Definition)* '}';
+
+Term = MultiplicativeTerm (('+' | '-') MultiplicativeTerm)*;
+
+MultiplicativeTerm = AtomTerm (('*' | '/') AtomTerm)*;
+
+AtomTerm = '(' Term ')' | IDENTIFIER | NUMBER;
+
+Main = MAIN [TypeSignature] '=' Lamda;
+
+TypeSignature = ':' Type;
+
+Type = TYPE | TYPE '=>' Type;
