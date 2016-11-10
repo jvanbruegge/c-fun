@@ -1,0 +1,3 @@
+TypeSignature = ":" Type;
+
+    Type = TYPE | TYPE "=>" Type;

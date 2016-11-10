@@ -1,0 +1,5 @@
+Term = MultiplicativeTerm {("+" | "-") MultiplicativeTerm};
+
+    MultiplicativeTerm = AtomTerm {("*" | "/") AtomTerm};
+
+        AtomTerm = "(" Term ")" | IDENTIFIER | NUMBER | FunctionCall;

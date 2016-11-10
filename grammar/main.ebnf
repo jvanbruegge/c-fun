@@ -1,41 +1,20 @@
+%root Program
+
 Program = {TopLevelStatement} Main {TopLevelStatement};
 
 TopLevelStatement = Declaration | Definition;
 
-Declaration = (CONST | LET | PURE) IDENTIFIER ":" TypeSignature ";";
+    Declaration = (CONST | LET | PURE) IDENTIFIER ":" TypeSignature ";";
+    Definition = Declaration "=" Expression ";";
 
-Definition = Declaration "=" Expression ";";
+        Expression = Lamda | Term | BooleanExpression;
 
-Expression = Lamda | Term | BooleanExpression;
+        %import './function.ebnf';
 
-Lamda = (IDENTIFIER | "()") "=>" (Expression | Block);
+        %import './term.ebnf';
 
-Block = "{" [{Declaration | Definition | Statement} | ReturnStatement] "}";
-
-Statement = IfStatement | FunctionCall | Block;
-
-IfStatement = IF "(" BooleanExpression ")" IfBranch [ELSE IfBranch] ";";
-
-IfBranch = RETURN Expression | Statement;
-
-FunctionCall = IDENTIFIER "(" [Expression {"," Expression}] ");";
-
-Term = MultiplicativeTerm {("+" | "-") MultiplicativeTerm};
-
-MultiplicativeTerm = AtomTerm {("*" | "/") AtomTerm};
-
-AtomTerm = "(" Term ")" | IDENTIFIER | NUMBER | FunctionCall;
-
-BooleanExpression = AndExpression {"&&" AndExpression};
-
-AndExpression = BooleanAtom {"||" Boolean};
-
-Comparison = Term [("<=" Term) | (">=" Term) | ("==" Term) | (">" Term) | ("<" Term)];
-
-BooleanAtom = ["!"] IDENTIFIER | TRUE | FALSE | Comparison | ["!"] FunctionCall | ["!"] "(" BooleanExpression ")";
+        %import './booleanExpression.ebnf';
 
 Main = MAIN [TypeSignature] "=" Lamda;
 
-TypeSignature = ":" Type;
-
-Type = TYPE | TYPE "=>" Type;
+    %import './type.ebnf';

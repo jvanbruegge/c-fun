@@ -1,0 +1,7 @@
+BooleanExpression = AndExpression {"&&" AndExpression};
+
+    AndExpression = BooleanAtom {"||" BooleanAtom};
+        
+        BooleanAtom = ["!"] IDENTIFIER | TRUE | FALSE | Comparison | ["!"] FunctionCall | ["!"] "(" BooleanExpression ")";
+        
+            Comparison = Term [("<=" Term) | (">=" Term) | ("==" Term) | (">" Term) | ("<" Term)];

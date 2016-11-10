@@ -1,0 +1,12 @@
+Lamda = (IDENTIFIER | "()") "=>" (Expression | Block);
+    
+    Block = "{" [{Declaration | Definition | Statement} | ReturnStatement] "}";
+    
+        Statement = IfStatement | FunctionCall | Block;
+            
+            IfStatement = IF "(" BooleanExpression ")" IfBranch [ELSE IfBranch] ";";
+
+                IfBranch = RETURN Expression | Statement;
+
+            FunctionCall = IDENTIFIER "(" [Expression {"," Expression}] ");";
+
