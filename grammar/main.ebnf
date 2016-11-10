@@ -16,7 +16,7 @@ Statement = IfStatement | FunctionCall;
 
 ReturnStatement = RETURN Expression ";";
 
-IfStatement = IF "(" Expression ")" (Expression | Block) [ELSE (Expression | Block)] ";";
+IfStatement = IF "(" Expression ")" ( [RETURN] Expression | Block) [ELSE ([RETURN] Expression | Block)] ";";
 
 FunctionCall = IDENTIFIER "(" [Expression {"," Expression}] ");";
 
