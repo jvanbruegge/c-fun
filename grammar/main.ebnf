@@ -1,25 +1,41 @@
-Program = (TopLevelStatement)* Main (TopLevelStatement)*;
+Program = {TopLevelStatement} Main {TopLevelStatement};
 
 TopLevelStatement = Declaration | Definition;
 
-Declaration = (CONST | LET | PURE) IDENTIFIER ':' TypeSignature ';';
+Declaration = (CONST | LET | PURE) IDENTIFIER ":" TypeSignature ";";
 
-Definition = Declaration '=' Expression ';';
+Definition = Declaration "=" Expression ";";
 
-Expression = Lamda | Term;
+Expression = Lamda | Term | BooleanExpression;
 
-Lamda = IDENTIFIER '=>' (Expression | Block);
+Lamda = (IDENTIFIER | "()") "=>" (Expression | Block);
 
-Block = '{' (Declaration | Definition)* '}';
+Block = "{" [{Declaration | Definition | Statement} | ReturnStatement] "}";
 
-Term = MultiplicativeTerm (('+' | '-') MultiplicativeTerm)*;
+Statement = IfStatement | FunctionCall;
 
-MultiplicativeTerm = AtomTerm (('*' | '/') AtomTerm)*;
+ReturnStatement = RETURN Expression ";";
 
-AtomTerm = '(' Term ')' | IDENTIFIER | NUMBER;
+IfStatement = IF "(" Expression ")" (Expression | Block) [ELSE (Expression | Block)] ";";
 
-Main = MAIN [TypeSignature] '=' Lamda;
+FunctionCall = IDENTIFIER "(" [Expression {"," Expression}] ");";
 
-TypeSignature = ':' Type;
+Term = MultiplicativeTerm {("+" | "-") MultiplicativeTerm};
 
-Type = TYPE | TYPE '=>' Type;
+MultiplicativeTerm = AtomTerm {("*" | "/") AtomTerm};
+
+AtomTerm = "(" Term ")" | IDENTIFIER | NUMBER | FunctionCall;
+
+BooleanExpression = AndExpression {"&&" AndExpression};
+
+AndExpression = BooleanAtom {"||" Boolean};
+
+Comparison = Term [("<=" Term) | (">=" Term) | ("==" Term) | (">" Term) | ("<" Term)];
+
+BooleanAtom = "!" BooleanAtom | TRUE | FALSE | Comparison | FunctionCall;
+
+Main = MAIN [TypeSignature] "=" Lamda;
+
+TypeSignature = ":" Type;
+
+Type = TYPE | TYPE "=>" Type;
