@@ -1,0 +1,11 @@
+%token CONST
+%token PURE
+%token LET
+%token IDENTIFIER
+%token TYPE
+%token TRUE
+%token FALSE
+%token IF
+%token ELSE
+%token RETURN
+%token NUMBER

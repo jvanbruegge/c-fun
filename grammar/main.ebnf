@@ -1,4 +1,5 @@
 %root Program
+%import './token.ebnf'
 
 Program = {TopLevelStatement} Main {TopLevelStatement};
 
@@ -9,12 +10,12 @@ TopLevelStatement = Declaration | Definition;
 
         Expression = Lamda | Term | BooleanExpression;
 
-        %import './function.ebnf';
+        %import './function.ebnf'
 
-        %import './term.ebnf';
+        %import './term.ebnf'
 
-        %import './booleanExpression.ebnf';
+        %import './booleanExpression.ebnf'
 
 Main = MAIN [TypeSignature] "=" Lamda;
 
-    %import './type.ebnf';
+    %import './type.ebnf'
