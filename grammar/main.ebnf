@@ -12,11 +12,11 @@ Lamda = (IDENTIFIER | "()") "=>" (Expression | Block);
 
 Block = "{" [{Declaration | Definition | Statement} | ReturnStatement] "}";
 
-Statement = IfStatement | FunctionCall;
+Statement = IfStatement | FunctionCall | Block;
 
-ReturnStatement = RETURN Expression ";";
+IfStatement = IF "(" BooleanExpression ")" IfBranch [ELSE IfBranch] ";";
 
-IfStatement = IF "(" Expression ")" ( [RETURN] Expression | Block) [ELSE ([RETURN] Expression | Block)] ";";
+IfBranch = RETURN Expression | Statement;
 
 FunctionCall = IDENTIFIER "(" [Expression {"," Expression}] ");";
 
@@ -32,7 +32,7 @@ AndExpression = BooleanAtom {"||" Boolean};
 
 Comparison = Term [("<=" Term) | (">=" Term) | ("==" Term) | (">" Term) | ("<" Term)];
 
-BooleanAtom = "!" BooleanAtom | TRUE | FALSE | Comparison | FunctionCall;
+BooleanAtom = ["!"] IDENTIFIER | TRUE | FALSE | Comparison | ["!"] FunctionCall | ["!"] "(" BooleanExpression ")";
 
 Main = MAIN [TypeSignature] "=" Lamda;
 
